@@ -7,11 +7,23 @@ ntask: number of tasks that we have to create
 """
 def csv2ics(tasks_list, ntask):
     # put the header in 
-    cal = Calendar()
-    cal.add('VERSION','2.0')
-    cal.add('X-WR-CALNAME','日程安排')
-    cal.add('X-APPLE-CALENDAR-COLOR','#540EB9')
-    cal.add('X-WR-TIMEZONE','Asia/Shanghai')
+    cal_list = list()
+    for i in range(4):
+        cal_list.append(Calendar())
+        cal_list[i].add('VERSION','2.0')
+        cal_list[i].add('X-WR-TIMEZONE','Asia/Shanghai')
+
+    cal_list[0].add('X-WR-CALNAME','Work Plan')
+    cal_list[1].add('X-WR-CALNAME','Gym Plan')
+    cal_list[2].add('X-WR-CALNAME','Chores Plan')
+    cal_list[3].add('X-WR-CALNAME','Break Plan')
+
+    cal_list[0].add('X-APPLE-CALENDAR-COLOR','#ff8000')
+    cal_list[1].add('X-APPLE-CALENDAR-COLOR','#b3903f')
+    cal_list[2].add('X-APPLE-CALENDAR-COLOR','#33aaee')
+    cal_list[3].add('X-APPLE-CALENDAR-COLOR','#98cf8b')
+    # note cal_list[0] is for work, 1 is for gym, 2 is for chores, 3 is for break
+    #cal = Calendar()
 
     event_list = list()
     alarm_list = list()
@@ -38,12 +50,41 @@ def csv2ics(tasks_list, ntask):
 
 
     for k in range(ntask):
-        cal.add_component(event_list[k])
+        if tasks_list[k][4] == 'work':
+            cal_list[0].add_component(event_list[k])
 
-    f = open('testCal_v1.ics', 'wb')
-    f.write(cal.to_ical())
+        if tasks_list[k][4] == 'gym':
+            cal_list[1].add_component(event_list[k])
+
+        if tasks_list[k][4] == 'chores':
+            cal_list[2].add_component(event_list[k])
+
+        if tasks_list[k][4] == 'break':
+            cal_list[3].add_component(event_list[k])
+
+    #f = open('workPlan.ics', 'wb')
+    #for i in range(len(cal_list)):
+    #    f.write(cal_list[i].to_ical())
+    #f.close()
+
+
+    f = open('workPlan.ics', 'wb')
+    f.write(cal_list[0].to_ical())
     f.close()
-    print(cal.to_ical().decode('utf-8')) 
+
+    f = open('gymPlan.ics', 'wb')
+    f.write(cal_list[1].to_ical())
+    f.close()
+
+    f = open('ChoresPlan.ics', 'wb')
+    f.write(cal_list[2].to_ical())
+    f.close()
+
+    f = open('breakPlan.ics', 'wb')
+    f.write(cal_list[3].to_ical())
+    f.close()
+
+    #print(cal.to_ical().decode('utf-8')) 
 
 
 
