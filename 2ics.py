@@ -2,7 +2,7 @@ from icalendar import Calendar, Event, Alarm
 from datetime import timedelta
 import csv 
 
-def createCalendar():
+def createCalendar(tasks_list, ntask):
     cal = Calendar()
     cal.add('VERSION','2.0')
     cal.add('X-WR-CALNAME','生成ics文件测试')
