@@ -5,7 +5,7 @@ from datetime import timedelta
 tasks_list: list of csv events
 ntask: number of tasks that we have to create 
 """
-def csv2ics(tasks_list, ntask):
+def csv2ics(tasks_list, ntask,fileName):
     # put the header in 
     cal = Calendar()
     cal.add('VERSION','2.0')
@@ -40,7 +40,12 @@ def csv2ics(tasks_list, ntask):
     for k in range(ntask):
         cal.add_component(event_list[k])
 
-    f = open('testCal_v1.ics', 'wb')
+
+
+
+    target_name = f'{fileName}_Plan.ics'
+
+    f = open(target_name, 'wb')
     f.write(cal.to_ical())
     f.close()
     print(cal.to_ical().decode('utf-8')) 

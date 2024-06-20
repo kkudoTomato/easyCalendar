@@ -1,9 +1,11 @@
 import csv
 from datetime import timedelta, datetime
 
-def clean_csv():
+def clean_csv(fullPath):
     tasks = list()
-    with open('calendar_test.csv') as input:
+
+
+    with open(fullPath) as input:
         csv_reader = csv.reader(input, delimiter=',')
         line_count = 0
         for row in csv_reader:
